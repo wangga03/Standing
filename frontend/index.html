@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>FFL Kediri Selatan | Standings Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;700&family=Hanken+Grotesk:wght@400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffb4aa",
+                        "on-surface": "#e5e2e1",
+                        "surface-variant": "#353535",
+                        "background": "#131313",
+                        "surface-bright": "#393939",
+                        "on-surface-variant": "#e8bcb6",
+                        "surface": "#131313",
+                        "surface-container": "#20201f",
+                        "on-primary-container": "#fffbff",
+                        "surface-container-highest": "#353535",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-container": "#e61919",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary": "#690003",
+                        "error": "#ffb4ab"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Anton"],
+                        "headline-display": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "label-caps": ["Space Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "data-numeric": ["Space Grotesk"],
+                        "headline-lg": ["Anton"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #131313;
+            background-image:
+                linear-gradient(45deg, rgba(230, 25, 25, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(230, 25, 25, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(230, 25, 25, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(230, 25, 25, 0.05) 75%);
+            background-size: 40px 40px;
+            overflow-x: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="font-body-md text-on-surface antialiased">
+    <!-- Top Navigation -->
+    <header
+        class="bg-surface/80 backdrop-blur-md dark:bg-surface-container/80 docked full-width top-0 border-b-2 border-primary-container z-50 sticky">
+        <div class="flex justify-between items-center w-full px-4 md:px-16 py-4">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 bg-surface-container-high rounded-lg flex items-center justify-center p-1 border border-primary/30">
+                    <span class="material-symbols-outlined text-primary text-3xl">sports_soccer</span>
+                </div>
+                <h1 class="font-headline-display text-2xl md:text-3xl text-on-surface uppercase tracking-wide">
+                    Festival Bola Voli Spon
+                </h1>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <nav class="flex gap-6">
+                    <a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1"
+                        href="#">Standings</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside
+            class="hidden lg:flex flex-col h-full w-64 bg-surface-container-low border-r-2 border-primary-container py-4 fixed top-20 bottom-0 overflow-y-auto z-40">
+            <div class="px-6 mb-8">
+                <h2 class="font-headline-md text-headline-md text-primary leading-tight">FBVS 2026 Kediri Selatan</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-1">Select Group:</p>
+                <select id="group-selector"
+                    class="mt-2 w-full bg-surface-container border border-primary/30 text-on-surface rounded p-2 focus:outline-none focus:border-primary">
+                    <!-- Dynamic Options -->
+                </select>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="openAddGroupModal()"
+                        class="flex-1 bg-primary/20 text-primary hover:bg-primary/40 border border-primary text-xs py-2 rounded uppercase font-bold tracking-wider">Add
+                        Group</button>
+                    <button onclick="deleteCurrentGroup()"
+                        class="flex-1 bg-surface-variant text-error hover:bg-error/20 border border-error/50 text-xs py-2 rounded uppercase font-bold tracking-wider">Del
+                        Group</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 lg:ml-64 p-4 md:p-8 pb-24">
+            <!-- Hero Header Section -->
+            <section
+                class="mb-12 relative overflow-hidden rounded-xl bg-surface-container-highest border-l-8 border-primary p-8">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="bg-primary px-3 py-1 text-on-primary font-label-caps text-[10px] rounded-sm">LIVE
+                            STANDINGS</span>
+                        <span id="current-group-name" class="text-primary font-label-caps text-label-caps">GROUP
+                            NAME</span>
+                    </div>
+                    <h2 class="font-headline-display text-4xl md:text-5xl text-on-surface uppercase mb-4">KEDIRI SELATAN
+                        I</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-surface-container p-4 border border-outline-variant flex flex-col gap-1">
+                            <span class="font-label-caps text-label-caps text-primary">TEAMS</span>
+                            <span id="total-teams" class="font-headline-md text-headline-md">0 CLUBS</span>
+                        </div>
+                        <div class="bg-surface-container p-4 border border-outline-variant flex flex-col gap-1">
+                            <span class="font-label-caps text-label-caps text-primary">STATUS</span>
+                            <span class="font-headline-md text-headline-md flex items-center gap-2">
+                                <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                                LIVE
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Actions Bar -->
+            <section class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button onclick="openAddTeamModal()"
+                        class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-sm hover:brightness-110 active:scale-95 flex items-center gap-2">
+                        <span class="material-symbols-outlined">add</span>
+                        Add Team
+                    </button>
+                    <button onclick="exportToImage()"
+                        class="bg-surface-bright text-primary border border-primary/50 font-label-caps text-label-caps px-6 py-3 rounded-sm hover:bg-surface-variant active:scale-95 flex items-center gap-2">
+                        <span class="material-symbols-outlined">download</span>
+                        Export Image
+                    </button>
+                    <button onclick="exportAllImages()"
+                        class="bg-primary/20 text-primary border border-primary font-label-caps text-label-caps px-6 py-3 rounded-sm hover:bg-primary/30 active:scale-95 flex items-center gap-2">
+                        <span class="material-symbols-outlined">collections</span>
+                        Export All Groups
+                    </button>
+                </div>
+            </section>
+
+            <!-- Standings Table Container -->
+            <section class="bg-black border-2 border-primary-container overflow-hidden">
+                <div class="overflow-x-auto scrollbar-hide">
+                    <table class="w-full border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-primary-container text-on-primary-container">
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">POS</th>
+                                <th class="p-4 font-label-caps text-label-caps text-left">TEAM</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">P</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">W</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">D</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">L</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">GF</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-16">GA</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center bg-red-800 w-20">PTS</th>
+                                <th class="p-4 font-label-caps text-label-caps text-center w-24">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="divide-y divide-primary-container/20">
+                            <!-- Rows rendered dynamically via app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Add/Edit Team Modal -->
+    <div id="team-modal" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-surface-container-highest border border-primary/50 w-full max-w-md p-6 rounded-xl shadow-2xl">
+            <h3 id="team-modal-title" class="font-headline-md text-2xl text-primary mb-4">Add Team</h3>
+            <form id="team-form" class="space-y-4">
+                <input type="hidden" id="team-id">
+
+                <div>
+                    <label class="block text-sm text-on-surface-variant mb-1">Team Name</label>
+                    <input required type="text" id="team-name"
+                        class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-on-surface-variant mb-1">Logo URL (Optional)</label>
+                    <input type="text" id="team-logo"
+                        class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm text-on-surface-variant mb-1">Menang (W)</label>
+                        <input required type="number" id="team-win" min="0"
+                            class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-on-surface-variant mb-1">Imbang (D)</label>
+                        <input required type="number" id="team-draw" min="0"
+                            class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-on-surface-variant mb-1">Kalah (L)</label>
+                        <input required type="number" id="team-lose" min="0"
+                            class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-on-surface-variant mb-1">Goals For (GF)</label>
+                        <input required type="number" id="team-gf" min="0"
+                            class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-on-surface-variant mb-1">Goals Against (GA)</label>
+                        <input required type="number" id="team-ga" min="0"
+                            class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeTeamModal()"
+                        class="px-4 py-2 rounded text-on-surface-variant hover:bg-surface-variant">Cancel</button>
+                    <button type="submit"
+                        class="px-6 py-2 rounded bg-primary text-on-primary font-bold hover:brightness-110">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Group Modal -->
+    <div id="group-modal" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-surface-container-highest border border-primary/50 w-full max-w-sm p-6 rounded-xl shadow-2xl">
+            <h3 class="font-headline-md text-2xl text-primary mb-4">Add Group</h3>
+            <form id="group-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-on-surface-variant mb-1">Group Name</label>
+                    <input required type="text" id="group-name"
+                        class="w-full bg-surface-container border border-white/10 rounded p-2 text-on-surface focus:outline-none focus:border-primary">
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeGroupModal()"
+                        class="px-4 py-2 rounded text-on-surface-variant hover:bg-surface-variant">Cancel</button>
+                    <button type="submit"
+                        class="px-6 py-2 rounded bg-primary text-on-primary font-bold hover:brightness-110">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>
