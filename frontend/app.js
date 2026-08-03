@@ -116,6 +116,21 @@ function renderPage() {
 }
 
 // Modals Logic
+function populateTeamGroupSelector(selectedGroupId) {
+    const select = document.getElementById('team-group-id');
+    if (!select) return;
+    select.innerHTML = '';
+    data.groups.forEach(g => {
+        const option = document.createElement('option');
+        option.value = g.id;
+        option.textContent = g.name;
+        if (g.id === selectedGroupId) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+}
+
 window.openAddTeamModal = function() {
     if(!currentGroupId) {
         alert('Please create or select a group first.');
@@ -125,6 +140,7 @@ window.openAddTeamModal = function() {
     document.getElementById('team-form').reset();
     document.getElementById('team-id').value = '';
     document.getElementById('team-modal-title').textContent = 'Add New Team';
+    populateTeamGroupSelector(currentGroupId);
 }
 
 window.openEditTeamModal = function(teamId) {
@@ -134,6 +150,7 @@ window.openEditTeamModal = function(teamId) {
     document.getElementById('team-modal').classList.remove('hidden');
     document.getElementById('team-modal-title').textContent = 'Edit Team';
     document.getElementById('team-id').value = team.id;
+    populateTeamGroupSelector(team.groupId || currentGroupId);
     document.getElementById('team-name').value = team.name;
     document.getElementById('team-logo').value = team.logo || '';
     document.getElementById('team-win').value = team.win;
@@ -165,7 +182,7 @@ document.getElementById('team-form')?.addEventListener('submit', async function(
         lose: parseInt(document.getElementById('team-lose').value) || 0,
         gf: parseInt(document.getElementById('team-gf').value) || 0,
         ga: parseInt(document.getElementById('team-ga').value) || 0,
-        groupId: currentGroupId
+        groupId: document.getElementById('team-group-id')?.value || currentGroupId
     };
 
     try {
@@ -205,7 +222,7 @@ document.getElementById('team-form')?.addEventListener('submit', async function(
 });
 
 window.deleteTeam = async function(id) {
-    if (confirm('Are you sure you want to delete this team?')) {
+    if (confirm('Apakah Anda yakin ingin menghapus tim ini?')) {
         try {
             await fetch(`${API_URL}/teams/${id}`, { method: 'DELETE' });
             data.teams = data.teams.filter(t => t.id !== id);
@@ -266,7 +283,7 @@ document.getElementById('group-form')?.addEventListener('submit', async function
 
 window.deleteCurrentGroup = async function() {
     if (!currentGroupId) return;
-    if (confirm('Are you sure you want to delete this group and all its teams?')) {
+    if (confirm('Apakah Anda yakin ingin menghapus grup ini beserta seluruh tim di dalamnya?')) {
         try {
             await fetch(`${API_URL}/groups/${currentGroupId}`, { method: 'DELETE' });
             

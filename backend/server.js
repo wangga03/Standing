@@ -86,13 +86,13 @@ app.post('/api/teams', async (req, res) => {
 // Update a team
 app.put('/api/teams/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, logo, win, draw, lose, gf, ga } = req.body;
+    const { groupId, name, logo, win, draw, lose, gf, ga } = req.body;
     try {
         await pool.query(
-            'UPDATE teams SET name = ?, logo = ?, win = ?, draw = ?, lose = ?, gf = ?, ga = ? WHERE id = ?',
-            [name, logo || '', win || 0, draw || 0, lose || 0, gf || 0, ga || 0, id]
+            'UPDATE teams SET groupId = ?, name = ?, logo = ?, win = ?, draw = ?, lose = ?, gf = ?, ga = ? WHERE id = ?',
+            [groupId, name, logo || '', win || 0, draw || 0, lose || 0, gf || 0, ga || 0, id]
         );
-        res.json({ id, name, logo, win, draw, lose, gf, ga });
+        res.json({ id, groupId, name, logo, win, draw, lose, gf, ga });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
