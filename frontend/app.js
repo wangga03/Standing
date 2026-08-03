@@ -141,6 +141,12 @@ window.openAddTeamModal = function() {
     document.getElementById('team-id').value = '';
     document.getElementById('team-modal-title').textContent = 'Add New Team';
     populateTeamGroupSelector(currentGroupId);
+    
+    // Reset logo preview
+    document.getElementById('team-logo-file').value = '';
+    document.getElementById('team-logo').value = '';
+    document.getElementById('team-logo-preview-container').classList.add('hidden');
+    document.getElementById('team-logo-preview').src = '';
 }
 
 window.openEditTeamModal = function(teamId) {
@@ -153,6 +159,17 @@ window.openEditTeamModal = function(teamId) {
     populateTeamGroupSelector(team.groupId || currentGroupId);
     document.getElementById('team-name').value = team.name;
     document.getElementById('team-logo').value = team.logo || '';
+    
+    // Handle logo preview
+    document.getElementById('team-logo-file').value = '';
+    if (team.logo) {
+        document.getElementById('team-logo-preview').src = team.logo;
+        document.getElementById('team-logo-preview-container').classList.remove('hidden');
+    } else {
+        document.getElementById('team-logo-preview-container').classList.add('hidden');
+        document.getElementById('team-logo-preview').src = '';
+    }
+
     document.getElementById('team-win').value = team.win;
     document.getElementById('team-draw').value = team.draw;
     document.getElementById('team-lose').value = team.lose;
@@ -318,11 +335,70 @@ window.exportToImage = function() {
         alert('Tidak ada grup yang dipilih.');
         return;
     }
-    
-    // Open the new export.html page in a new tab
-    window.open(`export.html?groupId=${currentGroupId}`, '_blank');
+    const groupName = data.groups.find(g => g.id === currentGroupId)?.name || 'Group';
+    window.open(`export.html?groupId=${currentGroupId}&groupName=${encodeURIComponent(groupName)}`, '_blank');
 }
 
 window.exportAllImages = function() {
-    window.open(`export.html?exportAll=true`, '_blank');
+    if (!data.groups || data.groups.length === 0) {
+        alert('Tidak ada grup untuk diekspor.');
+        return;
+    }
+    window.open('export.html?exportAll=true', '_blank');
 }
+
+// Logo Upload Logic
+document.getElementById('team-logo-file')?.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Hanya file gambar yang diperbolehkan.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            // Resize image to max 200x200 to save database space
+            const canvas = document.createElement('canvas');
+            const MAX_SIZE = 200;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > MAX_SIZE) {
+                    height *= MAX_SIZE / width;
+                    width = MAX_SIZE;
+                }
+            } else {
+                if (height > MAX_SIZE) {
+                    width *= MAX_SIZE / height;
+                    height = MAX_SIZE;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Compress to WebP or JPEG
+            const base64String = canvas.toDataURL('image/webp', 0.8);
+            
+            document.getElementById('team-logo').value = base64String;
+            document.getElementById('team-logo-preview').src = base64String;
+            document.getElementById('team-logo-preview-container').classList.remove('hidden');
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('team-logo-clear')?.addEventListener('click', function() {
+    document.getElementById('team-logo-file').value = '';
+    document.getElementById('team-logo').value = '';
+    document.getElementById('team-logo-preview-container').classList.add('hidden');
+    document.getElementById('team-logo-preview').src = '';
+});
