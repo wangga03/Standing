@@ -58,12 +58,14 @@
     <main class="flex-1 overflow-auto flex items-center justify-center p-8 bg-black/50">
         <!-- Scale down container for preview -->
         <!-- Scale down container for preview -->
-        <div id="pages-container" class="shadow-2xl ring-4 ring-primary/30 relative flex flex-col gap-16" style="transform: scale(0.5); transform-origin: top center; margin-bottom: -720px;">
+        <div id="pages-container" class="shadow-2xl ring-4 ring-primary/30 relative flex flex-col gap-16"
+            style="transform: scale(0.5); transform-origin: top center; margin-bottom: -720px;">
             <!-- Pages will be dynamically injected here -->
         </div>
 
         <template id="page-template">
-            <div class="capture-area w-[1080px] h-[1440px] bg-[#5e0000] p-12 relative flex flex-col overflow-hidden" style="background-image: url('bg.png'); background-size: cover; background-position: center; font-family: 'Space Grotesk', sans-serif;">
+            <div class="capture-area w-[1080px] h-[1440px] bg-[#5e0000] p-12 relative flex flex-col overflow-hidden"
+                style="background-image: url('bg.jpg'); background-size: cover; background-position: center; font-family: 'Space Grotesk', sans-serif;">
                 <!-- Vignette effect -->
                 <div class="absolute inset-0 z-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.8)] pointer-events-none"></div>
 
@@ -72,25 +74,37 @@
                 </div>
             </div>
         </template>
-        
+
         <template id="group-template">
             <div class="group-container mb-12">
                 <!-- Group Title -->
-                <h2 class="group-title text-center text-4xl font-headline-display text-white tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] mb-6 uppercase"></h2>
-                
+                <h2
+                    class="group-title text-center text-4xl font-headline-display text-white tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] mb-6 uppercase">
+                </h2>
+
                 <!-- Table -->
-                <div class="flex flex-col gap-2 w-full px-8 relative transition-all duration-300" style="font-family: 'Space Grotesk', sans-serif;">
+                <div class="flex flex-col gap-2 w-full px-8 relative transition-all duration-300"
+                    style="font-family: 'Space Grotesk', sans-serif;">
                     <!-- Header -->
                     <div class="table-header flex font-bold mb-2 h-12">
-                        <div class="w-[60px] bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">POS</div>
-                        <div class="w-[432px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-3xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px] uppercase tracking-wider" style="text-shadow: 2px 2px 4px black;">TEAM</div>
-                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">P</div>
-                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">W</div>
-                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">D</div>
-                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">L</div>
-                        <div class="w-[68px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">GF</div>
-                        <div class="w-[68px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">GA</div>
-                        <div class="w-[84px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]" style="text-shadow: 2px 2px 4px black;">PTS</div>
+                        <div class="w-[60px] bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">POS</div>
+                        <div class="w-[432px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-3xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px] uppercase tracking-wider"
+                            style="text-shadow: 2px 2px 4px black;">TEAM</div>
+                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">P</div>
+                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">W</div>
+                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">D</div>
+                        <div class="w-[60px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">L</div>
+                        <div class="w-[68px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">GF</div>
+                        <div class="w-[68px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">GA</div>
+                        <div class="w-[84px] ml-2 bg-gradient-to-b from-[#1643a3] to-[#0c2866] text-white text-2xl flex items-center justify-center rounded-lg shadow-lg border-2 border-[#071945] border-b-[5px]"
+                            style="text-shadow: 2px 2px 4px black;">PTS</div>
                     </div>
                     <!-- Rows Dynamic Container -->
                     <div class="table-rows flex flex-col gap-2 w-full">
