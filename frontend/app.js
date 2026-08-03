@@ -94,8 +94,8 @@ function renderPage() {
         tr.innerHTML = `
             <td class="p-4 text-center font-data-numeric ${posClass}">${pos}</td>
             <td class="p-4 flex items-center gap-4">
-                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center p-1 overflow-hidden">
-                    ${team.logo ? `<img class="w-full h-full object-contain" src="${team.logo}" alt="logo">` : `<span class="material-symbols-outlined text-on-surface-variant">sports_soccer</span>`}
+                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center overflow-hidden">
+                    ${team.logo ? `<img class="w-full h-full object-cover rounded-full" src="${team.logo}" alt="logo">` : `<span class="material-symbols-outlined text-on-surface-variant">sports_soccer</span>`}
                 </div>
                 <span class="font-headline-md text-on-surface tracking-wide">${team.name}</span>
             </td>
