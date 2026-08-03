@@ -143,22 +143,22 @@
             </section>
 
             <!-- Admin Actions Bar -->
-            <section class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div class="flex items-center gap-3">
+            <section class="mb-8 flex flex-col md:flex-row gap-4 items-start justify-between">
+                <div class="flex flex-wrap items-center gap-3 w-full">
                     <button onclick="openAddTeamModal()"
-                        class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-sm hover:brightness-110 active:scale-95 flex items-center gap-2">
+                        class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2 md:px-6 md:py-3 rounded-sm hover:brightness-110 active:scale-95 flex items-center gap-2 whitespace-nowrap">
                         <span class="material-symbols-outlined">add</span>
                         Add Team
                     </button>
                     <button onclick="exportToImage()"
-                        class="bg-surface-bright text-primary border border-primary/50 font-label-caps text-label-caps px-6 py-3 rounded-sm hover:bg-surface-variant active:scale-95 flex items-center gap-2">
+                        class="bg-surface-bright text-primary border border-primary/50 font-label-caps text-label-caps px-4 py-2 md:px-6 md:py-3 rounded-sm hover:bg-surface-variant active:scale-95 flex items-center gap-2 whitespace-nowrap">
                         <span class="material-symbols-outlined">download</span>
                         Export Image
                     </button>
                     <button onclick="exportAllImages()"
-                        class="bg-primary/20 text-primary border border-primary font-label-caps text-label-caps px-6 py-3 rounded-sm hover:bg-primary/30 active:scale-95 flex items-center gap-2">
+                        class="bg-primary/20 text-primary border border-primary font-label-caps text-label-caps px-4 py-2 md:px-6 md:py-3 rounded-sm hover:bg-primary/30 active:scale-95 flex items-center gap-2 whitespace-nowrap">
                         <span class="material-symbols-outlined">collections</span>
-                        Export All Groups
+                        Export All
                     </button>
                 </div>
             </section>
