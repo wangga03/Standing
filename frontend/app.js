@@ -105,6 +105,7 @@ function renderPage() {
             <td class="p-4 text-center font-data-numeric">${team.lose}</td>
             <td class="p-4 text-center font-data-numeric text-on-surface-variant">${team.gf}</td>
             <td class="p-4 text-center font-data-numeric text-on-surface-variant">${team.ga}</td>
+            <td class="p-4 text-center font-data-numeric text-on-surface-variant">${team.gd}</td>
             <td class="p-4 text-center font-data-numeric ${ptsClass}">${team.pts}</td>
             <td class="p-4 text-center">
                 <button onclick="openEditTeamModal('${team.id}')" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">edit</button>

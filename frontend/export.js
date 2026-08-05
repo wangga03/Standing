@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 rowsHTML += `
                 <div class="flex items-stretch h-12" style="font-family: 'Space Grotesk', sans-serif;">
                     <div class="w-[60px] ${bgClass} text-white text-2xl font-bold flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${pos}</div>
-                    <div class="w-[432px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center gap-4 px-4 rounded-lg shadow-md border-2 border-b-[5px]">
+                    <div class="w-[356px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center gap-4 px-4 rounded-lg shadow-md border-2 border-b-[5px]">
                         ${logoHTML}
                         <span class="uppercase tracking-wide whitespace-nowrap" style="text-shadow: 2px 2px 4px black;">${team.name}</span>
                     </div>
@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="w-[60px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${team.lose}</div>
                     <div class="w-[68px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${team.gf}</div>
                     <div class="w-[68px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${team.ga}</div>
+                    <div class="w-[68px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${team.gd}</div>
                     <div class="w-[84px] ml-2 ${bgClass} text-white font-bold text-2xl flex items-center justify-center rounded-lg shadow-md border-2 border-b-[5px]" style="text-shadow: 2px 2px 4px black;">${team.pts}</div>
                 </div>
                 `;
@@ -190,6 +191,9 @@ document.getElementById('download-btn').addEventListener('click', async function
             let titleText = 'Standings';
             if (window.currentExportGroups && window.currentExportGroups.length === 1) {
                 titleText = window.currentExportGroups[0].name;
+                if (captureAreas.length > 1) {
+                    titleText += `_Part_${pageIndex}`;
+                }
             } else {
                 titleText = `All_Groups_Part_${pageIndex}`;
             }

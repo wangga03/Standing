@@ -38,6 +38,20 @@ async function init() {
         `);
         console.log('Table "teams" checked/created.');
         
+        await conn.execute(`
+            CREATE TABLE IF NOT EXISTS matches (
+                id VARCHAR(255) PRIMARY KEY,
+                groupId VARCHAR(255) NOT NULL,
+                team1Id VARCHAR(255) NOT NULL,
+                team2Id VARCHAR(255) NOT NULL,
+                team1Score INT NOT NULL,
+                team2Score INT NOT NULL,
+                matchDate DATE NOT NULL,
+                matchTime TIME NOT NULL
+            )
+        `);
+        console.log('Table "matches" checked/created.');
+
         console.log('Initialization complete.');
         await conn.end();
     } catch (error) {
